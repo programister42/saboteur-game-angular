@@ -6,10 +6,25 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+//components
+import { MainComponent } from './pages/main.component';
+import { AppBarComponent } from './components/app-bar.component';
+import { TablesComponent } from './components/tables.component';
+//material components
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatCardModule } from "@angular/material/card";
+
+const materialModules = [
+  MatToolbarModule,
+  MatCardModule
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainComponent,
+    AppBarComponent,
+    TablesComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +35,8 @@ import { environment } from '../environments/environment';
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    ...materialModules,
   ],
   providers: [],
   bootstrap: [AppComponent]
