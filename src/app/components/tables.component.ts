@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 interface Table {
   name: string;
@@ -28,7 +28,7 @@ export class TablesComponent implements OnInit {
     { name: 'Стор игрока Родион', isActive: false },
     { name: 'Стол игрока Тарас', isActive: false },
     { name: 'Стол с дополнением', isActive: false },
-  ];
+  ]
 
   constructor() {}
 
