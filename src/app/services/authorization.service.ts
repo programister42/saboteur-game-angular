@@ -35,7 +35,7 @@ export class AuthorizationService {
     this.http.post<ResponseOk | ResponseError>(
       `https://saboteurgame.herokuapp.com/register`,
       { name },
-      { responseType: 'json' },
+      { responseType: 'json', headers: { 'Content-Type': 'text/plain' } },
     ).subscribe((response) => {
       if (response.status === 'OK') {
         localStorage.setItem('authToken', response.uuid)
