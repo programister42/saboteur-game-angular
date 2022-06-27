@@ -19,7 +19,10 @@ import { AppComponent } from './app.component'
 import { AppBarComponent } from './components/app-bar.component'
 import { AuthModalComponent } from './components/auth-modal.component'
 import { TablesComponent } from './components/tables.component'
-import { MainComponent } from './pages/main.component'
+import { MainComponent } from './pages/main.component';
+import { GameTableComponent } from './pages/game-table.component';
+import { PlayersListComponent } from './components/players-list.component';
+import { GameBoardComponent } from './components/game-board.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -40,6 +43,9 @@ const materialModules = [
     AppBarComponent,
     TablesComponent,
     AuthModalComponent,
+    GameTableComponent,
+    PlayersListComponent,
+    GameBoardComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,15 +2,26 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, map, Observable } from 'rxjs'
 
+interface ResponseOk {
+  status: 'OK'
+  uuid: string
+}
+
+interface ResponseError {
+  status: 'ERROR'
+  message: string
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-  name$: BehaviorSubject<string> = new BehaviorSubject<string>('')
   private authToken$: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  name$: BehaviorSubject<string> = new BehaviorSubject<string>('')
   isAuthorized$: Observable<boolean> = this.authToken$.pipe(
     map(token => !!token),
   )
+  serverError$: BehaviorSubject<string> = new BehaviorSubject<string>('')
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('authToken')
@@ -21,15 +32,19 @@ export class AuthorizationService {
   }
 
   signUp(name: string) {
-    this.http.post(
+    this.http.post<ResponseOk | ResponseError>(
       `https://saboteurgame.herokuapp.com/register`,
-      'name=' + name,
-      { responseType: 'text' },
-    ).subscribe((token) => {
-      localStorage.setItem('authToken', token)
-      localStorage.setItem('name', name)
-      this.authToken$.next(token)
-      this.name$.next(name)
+      { name },
+      { responseType: 'json', headers: { 'Content-Type': 'text/plain' } },
+    ).subscribe((response) => {
+      if (response.status === 'OK') {
+        localStorage.setItem('authToken', response.uuid)
+        this.authToken$.next(response.uuid)
+        localStorage.setItem('name', name)
+        this.name$.next(name)
+      } else if (response.status === 'ERROR') {
+        this.serverError$.next(response.message)
+      }
     })
   }
 }
