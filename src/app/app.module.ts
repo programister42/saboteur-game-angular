@@ -18,11 +18,12 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { AppBarComponent } from './components/app-bar.component'
 import { AuthModalComponent } from './components/auth-modal.component'
+import { GameBoardComponent } from './components/game-board.component'
+import { PlayersListComponent } from './components/players-list.component'
 import { TablesComponent } from './components/tables.component'
-import { MainComponent } from './pages/main.component';
-import { GameTableComponent } from './pages/game-table.component';
-import { PlayersListComponent } from './components/players-list.component';
-import { GameBoardComponent } from './components/game-board.component';
+import { TunnelCardComponent } from './components/tunnel-card.component'
+import { GameTableComponent } from './pages/game-table.component'
+import { MainComponent } from './pages/main.component'
 
 const materialModules = [
   MatToolbarModule,
@@ -46,6 +47,7 @@ const materialModules = [
     GameTableComponent,
     PlayersListComponent,
     GameBoardComponent,
+    TunnelCardComponent,
   ],
   imports: [
     BrowserModule,

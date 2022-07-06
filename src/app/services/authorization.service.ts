@@ -16,12 +16,12 @@ interface ResponseError {
   providedIn: 'root',
 })
 export class AuthorizationService {
-  private authToken$: BehaviorSubject<string> = new BehaviorSubject<string>('')
   name$: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  serverError$: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  private authToken$: BehaviorSubject<string> = new BehaviorSubject<string>('')
   isAuthorized$: Observable<boolean> = this.authToken$.pipe(
     map(token => !!token),
   )
-  serverError$: BehaviorSubject<string> = new BehaviorSubject<string>('')
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('authToken')

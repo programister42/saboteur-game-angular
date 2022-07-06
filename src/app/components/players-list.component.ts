@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 interface Player {
   name: string;
@@ -37,8 +37,7 @@ interface Player {
       </mat-card>
     </div>
   `,
-  styles: [
-  ]
+  styles: [],
 })
 export class PlayersListComponent implements OnInit {
   players: Player[] = [
