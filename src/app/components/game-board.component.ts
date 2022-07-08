@@ -1,34 +1,41 @@
-import { Component, OnInit } from '@angular/core'
-import { AddGameCardButton, CardType, GameCard } from '../models/game-card'
+import { Component, OnInit } from '@angular/core';
+import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
 
 @Component({
   selector: 'app-game-board',
   template: `
-    <div class="grid gap-4 justify-start auto-rows-max auto-cols-max">
+    <div class="p-4 grid gap-2 justify-start auto-rows-max auto-cols-max">
       <mat-card
         *ngFor="let card of cards"
         [style.grid-row]="card.row"
         [style.grid-column]="card.column"
       >
-        <mat-card-header *ngIf="!isButton(card)">
+        <!-- <mat-card-header *ngIf="!isButton(card)">
           <mat-card-title>{{ card.cardType }}</mat-card-title>
           <mat-card-subtitle>x: {{ card.x }} y: {{ card.y }}</mat-card-subtitle>
-        </mat-card-header>
+        </mat-card-header> -->
         <mat-card-content>
-          <span *ngIf="card.canConnectBack">👈</span>
-          <span *ngIf="card.canConnectLeft">👆</span>
-          <span *ngIf="card.canConnectRight">👇</span>
-          <span *ngIf="card.canConnectFront">👉</span>
+          <div class="grid gap-4 place-items-center grid-cols-3 grid-rows-3">
+            <div></div>
+            <div><span *ngIf="card.canConnectLeft">👆</span></div>
+            <div></div>
+            <div><span *ngIf="card.canConnectBack">👈</span></div>
+            <div></div>
+            <div><span *ngIf="card.canConnectFront">👉</span></div>
+            <div></div>
+            <div><span *ngIf="card.canConnectRight">👇</span></div>
+            <div></div>
+          </div>
         </mat-card-content>
       </mat-card>
 
       <div
         *ngFor="let addButton of addCardButtons"
-        class="flex justify-center items-center p-6"
+        class="flex p-4 justify-center items-center"
         [style.grid-row]="addButton.row"
         [style.grid-column]="addButton.column"
       >
-        <button mat-fab (click)="createCard(addButton)">
+        <button mat-mini-fab (click)="createCard(addButton)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
