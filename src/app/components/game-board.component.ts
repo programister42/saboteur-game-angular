@@ -24,14 +24,11 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card'
 
       <div
         *ngFor="let addButton of addCardButtons"
-        class="flex justify-center items-center"
+        class="flex justify-center items-center p-6"
         [style.grid-row]="addButton.row"
         [style.grid-column]="addButton.column"
       >
-        <button
-          mat-fab
-          (click)="createCard(addButton)"
-        >
+        <button mat-fab (click)="createCard(addButton)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -39,90 +36,91 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card'
   `,
 })
 export class GameBoardComponent implements OnInit {
-  cards: GameCard[] = [new GameCard(0, 0, CardType.INTERSECTION)]
-  addCardButtons: AddGameCardButton[] = []
+  cards: GameCard[] = [new GameCard(0, 0, CardType.INTERSECTION)];
+  addCardButtons: AddGameCardButton[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
-    this.addButtons()
+    this.addButtons();
   }
 
   isButton(card: GameCard) {
-    return card.cardType === CardType.ADD_CARD_BUTTON
+    return card.cardType === CardType.ADD_CARD_BUTTON;
   }
 
   createCard(addCardButton: AddGameCardButton) {
-    this.cards.push(addCardButton.possibleGameCards[Math.floor(Math.random() * addCardButton.possibleGameCards.length)])
-    this.addButtons()
+    this.cards.push(
+      addCardButton.possibleGameCards[
+        Math.floor(Math.random() * addCardButton.possibleGameCards.length)
+      ]
+    );
+    this.addButtons();
   }
 
   addButtons() {
-    this.addCardButtons = []
+    this.addCardButtons = [];
 
     const addButton = (x: number, y: number) => {
-      const possibleCards: GameCard[] = []
+      const possibleCards: GameCard[] = [];
 
       const checkConnectionPossibilities = (card: GameCard) => {
-        const front = this.findFront(card)
-        const back = this.findBack(card)
-        const left = this.findLeft(card)
-        const right = this.findRight(card)
+        const front = this.findFront(card);
+        const back = this.findBack(card);
+        const left = this.findLeft(card);
+        const right = this.findRight(card);
 
         if (
-          (front && front.canConnectBack !== card.canConnectFront)
-          || (back && back.canConnectFront !== card.canConnectBack)
-          || (left && left.canConnectRight !== card.canConnectLeft)
-          || (right && right.canConnectLeft !== card.canConnectRight)
-        ) return
+          (front && front.canConnectBack !== card.canConnectFront) ||
+          (back && back.canConnectFront !== card.canConnectBack) ||
+          (left && left.canConnectRight !== card.canConnectLeft) ||
+          (right && right.canConnectLeft !== card.canConnectRight)
+        )
+          return;
 
-        possibleCards.push(card)
-      }
+        possibleCards.push(card);
+      };
 
-      Object
-        .values(CardType)
-        .filter(value => value !== CardType.ADD_CARD_BUTTON)
-        .forEach(cardType => {
-          checkConnectionPossibilities(new GameCard(x, y, cardType))
-          checkConnectionPossibilities(new GameCard(x, y, cardType).rotate())
-        })
+      Object.values(CardType)
+        .filter((value) => value !== CardType.ADD_CARD_BUTTON)
+        .forEach((cardType) => {
+          checkConnectionPossibilities(new GameCard(x, y, cardType));
+          checkConnectionPossibilities(new GameCard(x, y, cardType).rotate());
+        });
 
-      this.addCardButtons.push(
-        new AddGameCardButton(x, y, possibleCards),
-      )
-    }
+      this.addCardButtons.push(new AddGameCardButton(x, y, possibleCards));
+    };
 
-    this.cards.forEach(card => {
-      if (this.isButton(card)) return
+    this.cards.forEach((card) => {
+      if (this.isButton(card)) return;
       if (card.canConnectFront && !this.findFront(card)) {
-        addButton(card.x + 1, card.y)
+        addButton(card.x + 1, card.y);
       }
       if (card.canConnectBack && !this.findBack(card)) {
-        addButton(card.x - 1, card.y)
+        addButton(card.x - 1, card.y);
       }
       if (card.canConnectLeft && !this.findLeft(card)) {
-        addButton(card.x, card.y - 1)
+        addButton(card.x, card.y - 1);
       }
       if (card.canConnectRight && !this.findRight(card)) {
-        addButton(card.x, card.y + 1)
+        addButton(card.x, card.y + 1);
       }
-    })
+    });
   }
 
   findLeft(card: GameCard) {
-    return this.cards.find(el => el.y === card.y - 1 && el.x === card.x)
+    return this.cards.find((el) => el.y === card.y - 1 && el.x === card.x);
   }
 
   findRight(card: GameCard) {
-    return this.cards.find(el => el.y === card.y + 1 && el.x === card.x)
+    return this.cards.find((el) => el.y === card.y + 1 && el.x === card.x);
   }
 
   findFront(card: GameCard) {
-    return this.cards.find(el => el.x === card.x + 1 && el.y === card.y)
+    return this.cards.find((el) => el.x === card.x + 1 && el.y === card.y);
   }
 
   findBack(card: GameCard) {
-    return this.cards.find(el => el.x === card.x - 1 && el.y === card.y)
+    return this.cards.find((el) => el.x === card.x - 1 && el.y === card.y);
   }
 }
