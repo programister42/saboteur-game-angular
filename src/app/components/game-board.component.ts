@@ -4,7 +4,7 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
 @Component({
   selector: 'app-game-board',
   template: `
-    <div class="p-4 grid gap-2 justify-start auto-rows-max auto-cols-max">
+    <div class="w-max h-max p-4 grid gap-2 justify-start auto-rows-max auto-cols-max">
       <mat-card
         *ngFor="let card of cards"
         [style.grid-row]="card.row"
