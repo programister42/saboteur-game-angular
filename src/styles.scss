@@ -12,3 +12,29 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 0.16rem;
+  height: 0.16rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba($color: #fff, $alpha: 0.2);
+  border-radius: 0.5rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba($color: #fff, $alpha: 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
