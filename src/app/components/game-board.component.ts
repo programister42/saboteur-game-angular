@@ -4,34 +4,28 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
 @Component({
   selector: 'app-game-board',
   template: `
-    <div class="w-max h-max p-4 grid gap-2 justify-start auto-rows-max auto-cols-max">
-      <mat-card
+    <div
+      [ngClass]="[
+        'w-max',
+        'h-max',
+        'p-4',
+        'grid',
+        'gap-2',
+        'justify-start',
+        'auto-rows-max',
+        'auto-cols-max'
+      ]"
+    >
+      <app-tunnel-card
         *ngFor="let card of cards"
+        [card]="card"
         [style.grid-row]="card.row"
         [style.grid-column]="card.column"
-      >
-        <!-- <mat-card-header *ngIf="!isButton(card)">
-          <mat-card-title>{{ card.cardType }}</mat-card-title>
-          <mat-card-subtitle>x: {{ card.x }} y: {{ card.y }}</mat-card-subtitle>
-        </mat-card-header> -->
-        <mat-card-content>
-          <div class="grid gap-4 place-items-center grid-cols-3 grid-rows-3">
-            <div></div>
-            <div><span *ngIf="card.canConnectLeft">👆</span></div>
-            <div></div>
-            <div><span *ngIf="card.canConnectBack">👈</span></div>
-            <div></div>
-            <div><span *ngIf="card.canConnectFront">👉</span></div>
-            <div></div>
-            <div><span *ngIf="card.canConnectRight">👇</span></div>
-            <div></div>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      ></app-tunnel-card>
 
       <div
         *ngFor="let addButton of addCardButtons"
-        class="flex p-4 justify-center items-center"
+        [ngClass]="['flex', 'p-4', 'justify-center', 'items-center']"
         [style.grid-row]="addButton.row"
         [style.grid-column]="addButton.column"
       >
