@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1657622635124,
+  "timestamp": 1657623789303,
   "index": "/saboteur-game-angular/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/saboteur-game-angular/favicon.ico",
         "/saboteur-game-angular/index.html",
-        "/saboteur-game-angular/main.f70c6d9794775983.js",
+        "/saboteur-game-angular/main.d5cafaf0360508cf.js",
         "/saboteur-game-angular/manifest.webmanifest",
         "/saboteur-game-angular/polyfills.c176ca026c4d7868.js",
         "/saboteur-game-angular/runtime.af097bdf46f091be.js",
@@ -56,8 +56,8 @@
     "/saboteur-game-angular/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/saboteur-game-angular/background.441d90348209735e.jpg": "7dfe2a3588b3895924ff59720e790ccf0f6218df",
     "/saboteur-game-angular/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/saboteur-game-angular/index.html": "448c778c2e81d0f68e4d9f9d46dca519d9178c09",
-    "/saboteur-game-angular/main.f70c6d9794775983.js": "9164e09c2ed0eb06d0c949f647b9e1df0a8ae7d1",
+    "/saboteur-game-angular/index.html": "01aa00ca9df75e4aebb9344430e8fe54b2bd75d4",
+    "/saboteur-game-angular/main.d5cafaf0360508cf.js": "2f477185db2d7d230a18948602a40c72b3c31b43",
     "/saboteur-game-angular/manifest.webmanifest": "5189f4b11dc86505acb2dab2775382a7c611926c",
     "/saboteur-game-angular/polyfills.c176ca026c4d7868.js": "108643ed26b6ec96d72713051e7ed15d4e74b108",
     "/saboteur-game-angular/runtime.af097bdf46f091be.js": "c7aab5c3435f9f5bebef4af8699afc2e2dddf89f",

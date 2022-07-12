@@ -11,8 +11,8 @@ import { Component, OnInit } from '@angular/core'
       :host {
         display: flex;
         flex-direction: column;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background-color: #000;
         background-image: url('../../assets/background.jpg');
         background-position: center;
