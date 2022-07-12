@@ -1,12 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GameCard } from '../models/game-card';
+import { CardType, GameCard, InHandGameCard } from '../models/game-card';
 
 @Component({
   selector: 'app-tunnel-card',
   template: `
-    <mat-card>
+    <mat-card
+      [ngClass]="[
+        'backdrop-blur',
+        'border',
+        'bg-transparent',
+        isActive ? 'border-green-600' : 'border-neutral-800'
+      ]"
+    >
       <mat-card-content>
-        <div class="grid gap-4 place-items-center grid-cols-3 grid-rows-3 h-max w-max">
+        <div
+          [ngClass]="[
+            'grid',
+            'gap-4',
+            'place-items-center',
+            'grid-cols-3',
+            'grid-rows-3',
+            'h-max',
+            'w-max'
+          ]"
+        >
           <div></div>
           <div><span *ngIf="card.canConnectLeft">👆</span></div>
           <div></div>
@@ -23,7 +40,8 @@ import { GameCard } from '../models/game-card';
   styles: [],
 })
 export class TunnelCardComponent implements OnInit {
-  @Input() card!: GameCard;
+  @Input() card!: GameCard | InHandGameCard;
+  @Input() isActive: boolean = false;
 
   constructor() {}
 

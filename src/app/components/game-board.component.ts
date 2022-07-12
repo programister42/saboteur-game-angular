@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { combineLatest, Observable, zip } from 'rxjs';
 import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
+import { GameEngineService } from '../services/game-engine.service';
 
 @Component({
   selector: 'app-game-board',
@@ -15,6 +17,12 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
         'auto-rows-max',
         'auto-cols-max'
       ]"
+      #gameBoard
+      [style.marginTop]="
+        gameBoard.offsetHeight < hostElement.offsetHeight
+          ? (hostElement.offsetHeight - gameBoard.offsetHeight) / 2 + 'px'
+          : '0px'
+      "
     >
       <app-tunnel-card
         *ngFor="let card of cards"
@@ -29,7 +37,7 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
         [style.grid-row]="addButton.row"
         [style.grid-column]="addButton.column"
       >
-        <button mat-mini-fab (click)="createCard(addButton)">
+        <button mat-mini-fab (click)="playCard(addButton)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -39,61 +47,51 @@ import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
 export class GameBoardComponent implements OnInit {
   cards: GameCard[] = [new GameCard(0, 0, CardType.INTERSECTION)];
   addCardButtons: AddGameCardButton[] = [];
+  hostElement: HTMLElement;
+  activeCard!: GameCard;
 
-  constructor() {}
+  constructor(element: ElementRef, private gameEngine: GameEngineService) {
+    this.hostElement = element.nativeElement;
+  }
 
   ngOnInit(): void {
-    this.addButtons();
-  }
-
-  isButton(card: GameCard) {
-    return card.cardType === CardType.ADD_CARD_BUTTON;
-  }
-
-  createCard(addCardButton: AddGameCardButton) {
-    this.cards.push(
-      addCardButton.possibleGameCards[
-        Math.floor(Math.random() * addCardButton.possibleGameCards.length)
-      ]
+    combineLatest([this.gameEngine.activeCard, this.gameEngine.chosingCardState, this.gameEngine.inHandCards]).subscribe(
+      ([activeCard, chosingCardState, inHandCards]) => {
+        if (chosingCardState) {
+          this.activeCard = activeCard;
+          this.addButtons(activeCard);
+        } else this.addCardButtons = [];
+      }
     );
-    this.addButtons();
   }
 
-  addButtons() {
+  playCard(button: AddGameCardButton) {
+    this.cards.push(new GameCard(button.x, button.y, this.activeCard.type, this.activeCard));
+    this.gameEngine.finishCurrentMove();
+  }
+
+  addButtons(activeCard: GameCard) {
     this.addCardButtons = [];
 
     const addButton = (x: number, y: number) => {
-      const possibleCards: GameCard[] = [];
+      const cardForCheck = new GameCard(x, y, activeCard.type, activeCard);
 
-      const checkConnectionPossibilities = (card: GameCard) => {
-        const front = this.findFront(card);
-        const back = this.findBack(card);
-        const left = this.findLeft(card);
-        const right = this.findRight(card);
+      const front = this.findFront(cardForCheck);
+      const back = this.findBack(cardForCheck);
+      const left = this.findLeft(cardForCheck);
+      const right = this.findRight(cardForCheck);
 
-        if (
-          (front && front.canConnectBack !== card.canConnectFront) ||
-          (back && back.canConnectFront !== card.canConnectBack) ||
-          (left && left.canConnectRight !== card.canConnectLeft) ||
-          (right && right.canConnectLeft !== card.canConnectRight)
-        )
-          return;
+      if (
+        (front && front.canConnectBack !== cardForCheck.canConnectFront) ||
+        (back && back.canConnectFront !== cardForCheck.canConnectBack) ||
+        (left && left.canConnectRight !== cardForCheck.canConnectLeft) ||
+        (right && right.canConnectLeft !== cardForCheck.canConnectRight)
+      ) return
 
-        possibleCards.push(card);
-      };
-
-      Object.values(CardType)
-        .filter((value) => value !== CardType.ADD_CARD_BUTTON)
-        .forEach((cardType) => {
-          checkConnectionPossibilities(new GameCard(x, y, cardType));
-          checkConnectionPossibilities(new GameCard(x, y, cardType).rotate());
-        });
-
-      this.addCardButtons.push(new AddGameCardButton(x, y, possibleCards));
+      this.addCardButtons.push(new AddGameCardButton(x, y));
     };
 
     this.cards.forEach((card) => {
-      if (this.isButton(card)) return;
       if (card.canConnectFront && !this.findFront(card)) {
         addButton(card.x + 1, card.y);
       }

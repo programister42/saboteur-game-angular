@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 @Component({
   selector: 'app-game-table',
   template: `
-    <app-game-board class="flex-1" [style.padding]="'0 !important'" appDragToScroll></app-game-board>
+    <app-game-board class="flex-1" appDragToScroll></app-game-board>
     <app-in-hand-cards appDragToScroll></app-in-hand-cards>
   `,
   styles: [
