@@ -4,8 +4,11 @@ export enum CardType {
   RIGHT_TURN = 'right-turn',
   LEFT_TURN = 'left-turn',
   INTERSECTION = 'intersection',
-  T_INTERSECTION = 't-intersection',
+  HORIZONTAL_T_INTERSECTION = 'horizontal-t-intersection',
+  VERTICAL_T_INTERSECTION = 'vertical-t-intersection',
   ADD_CARD_BUTTON = 'add-card-button',
+  HORIZONTAL_DEAD_END = 'horizontal-dead-end',
+  VERTICAL_DEAD_END = 'vertical-dead-end',
 }
 
 export class GameCard {
@@ -44,10 +47,21 @@ export class GameCard {
         this.canConnectLeft = true
         this.canConnectRight = true
         break
-      case CardType.T_INTERSECTION:
+      case CardType.HORIZONTAL_T_INTERSECTION:
         this.canConnectBack = true
         this.canConnectLeft = true
         this.canConnectRight = true
+        break
+      case CardType.VERTICAL_T_INTERSECTION:
+        this.canConnectBack = true
+        this.canConnectFront = true
+        this.canConnectLeft = true
+        break
+      case CardType.HORIZONTAL_DEAD_END:
+        this.canConnectBack = true
+        break
+      case CardType.VERTICAL_DEAD_END:
+        this.canConnectLeft = true
         break
     }
 

@@ -8,11 +8,14 @@ import { CardType, GameCard, InHandGameCard } from '../models/game-card';
 export class GameEngineService {
   inHandCards: BehaviorSubject<InHandGameCard[]> = new BehaviorSubject([
     new InHandGameCard(0, 0, CardType.INTERSECTION),
-    new InHandGameCard(0, 0, CardType.T_INTERSECTION),
     new InHandGameCard(0, 0, CardType.HORIZONTAL),
     new InHandGameCard(0, 0, CardType.VERTICAL),
     new InHandGameCard(0, 0, CardType.LEFT_TURN),
     new InHandGameCard(0, 0, CardType.RIGHT_TURN),
+    new InHandGameCard(0, 0, CardType.HORIZONTAL_T_INTERSECTION),
+    new InHandGameCard(0, 0, CardType.VERTICAL_T_INTERSECTION),
+    new InHandGameCard(0, 0, CardType.HORIZONTAL_DEAD_END),
+    new InHandGameCard(0, 0, CardType.VERTICAL_DEAD_END),
   ]);
 
   chosingCardState: BehaviorSubject<boolean> = new BehaviorSubject(false);

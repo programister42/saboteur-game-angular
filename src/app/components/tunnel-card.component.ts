@@ -28,7 +28,7 @@ import { CardType, GameCard, InHandGameCard } from '../models/game-card';
           <div><span *ngIf="card.canConnectLeft">👆</span></div>
           <div></div>
           <div><span *ngIf="card.canConnectBack">👈</span></div>
-          <div></div>
+          <div><span *ngIf="isDeadEnd()">🚧</span></div>
           <div><span *ngIf="card.canConnectFront">👉</span></div>
           <div></div>
           <div><span *ngIf="card.canConnectRight">👇</span></div>
@@ -46,4 +46,11 @@ export class TunnelCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  isDeadEnd(): boolean {
+    return (
+      this.card.type === CardType.VERTICAL_DEAD_END ||
+      this.card.type === CardType.HORIZONTAL_DEAD_END
+    );
+  }
 }
