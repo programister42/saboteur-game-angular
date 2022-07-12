@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-game-table',
@@ -14,7 +14,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
         width: 100vw;
         height: 100vh;
         background-color: #000;
-        background-image: url('assets/background.jpg');
+        background-image: url('/assets/background.jpg');
         background-position: center;
         background-size: cover;
       }

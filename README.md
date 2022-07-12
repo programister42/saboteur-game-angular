@@ -33,3 +33,7 @@ the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 ### To generate flat component use flags:
 
 `--flat --inline-style --inline-template --skip-tests`
+
+### To build for gh-pages use run:
+
+`ng build --output-path docs --base-href /saboteur-game-angular/`

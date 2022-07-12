@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
 
 interface Table {
   id: number;
@@ -28,18 +28,18 @@ interface Table {
 })
 export class TablesComponent implements OnInit {
   tables: Table[] = [
-    { id: 1, name: 'Игровой стол', isActive: false},
+    { id: 1, name: 'Игровой стол', isActive: false },
     { id: 1, name: 'Стол игрока Женя', isActive: false },
     { id: 1, name: 'Стор игрока Родион', isActive: false },
     { id: 1, name: 'Стол игрока Тарас', isActive: false },
     { id: 1, name: 'Стол с дополнением', isActive: false },
-  ];
+  ]
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   selectTable(table: Table): void {
-    this.router.navigate([table.id]);
+    this.router.navigate([table.id])
   }
 }

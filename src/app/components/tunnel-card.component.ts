@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CardType, GameCard, InHandGameCard } from '../models/game-card';
+import { Component, Input, OnInit } from '@angular/core'
+import { CardType, GameCard, InHandGameCard } from '../models/game-card'
 
 @Component({
   selector: 'app-tunnel-card',
@@ -40,8 +40,8 @@ import { CardType, GameCard, InHandGameCard } from '../models/game-card';
   styles: [],
 })
 export class TunnelCardComponent implements OnInit {
-  @Input() card!: GameCard | InHandGameCard;
-  @Input() isActive: boolean = false;
+  @Input() card!: GameCard | InHandGameCard
+  @Input() isActive: boolean = false
 
   constructor() {}
 
@@ -51,6 +51,6 @@ export class TunnelCardComponent implements OnInit {
     return (
       this.card.type === CardType.VERTICAL_DEAD_END ||
       this.card.type === CardType.HORIZONTAL_DEAD_END
-    );
+    )
   }
 }

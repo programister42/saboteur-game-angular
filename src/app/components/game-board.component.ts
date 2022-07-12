@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { combineLatest, Observable, zip } from 'rxjs';
-import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
-import { GameEngineService } from '../services/game-engine.service';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core'
+import { combineLatest } from 'rxjs'
+import { AddGameCardButton, CardType, GameCard } from '../models/game-card'
+import { GameEngineService } from '../services/game-engine.service'
 
 @Component({
   selector: 'app-game-board',
@@ -44,39 +44,39 @@ import { GameEngineService } from '../services/game-engine.service';
 export class GameBoardComponent implements OnInit {
   @ViewChild('gameBoard') gameBoard!: ElementRef
 
-  cards: GameCard[] = [new GameCard(0, 0, CardType.INTERSECTION)];
-  addCardButtons: AddGameCardButton[] = [];
-  activeCard!: GameCard;
+  cards: GameCard[] = [new GameCard(0, 0, CardType.INTERSECTION)]
+  addCardButtons: AddGameCardButton[] = []
+  activeCard!: GameCard
 
-  constructor(private gameEngine: GameEngineService,private renderer: Renderer2) {
+  constructor(private gameEngine: GameEngineService, private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
     combineLatest([this.gameEngine.activeCard, this.gameEngine.chosingCardState, this.gameEngine.inHandCards]).subscribe(
       ([activeCard, chosingCardState, inHandCards]) => {
         if (chosingCardState) {
-          this.activeCard = activeCard;
-          this.addButtons(activeCard);
-        } else this.addCardButtons = [];
-      }
-    );
+          this.activeCard = activeCard
+          this.addButtons(activeCard)
+        } else this.addCardButtons = []
+      },
+    )
   }
 
   playCard(button: AddGameCardButton) {
-    this.cards.push(new GameCard(button.x, button.y, this.activeCard.type, this.activeCard));
-    this.gameEngine.finishCurrentMove();
+    this.cards.push(new GameCard(button.x, button.y, this.activeCard.type, this.activeCard))
+    this.gameEngine.finishCurrentMove()
   }
 
   addButtons(activeCard: GameCard) {
-    this.addCardButtons = [];
+    this.addCardButtons = []
 
     const addButton = (x: number, y: number) => {
-      const cardForCheck = new GameCard(x, y, activeCard.type, activeCard);
+      const cardForCheck = new GameCard(x, y, activeCard.type, activeCard)
 
-      const front = this.findFront(cardForCheck);
-      const back = this.findBack(cardForCheck);
-      const left = this.findLeft(cardForCheck);
-      const right = this.findRight(cardForCheck);
+      const front = this.findFront(cardForCheck)
+      const back = this.findBack(cardForCheck)
+      const left = this.findLeft(cardForCheck)
+      const right = this.findRight(cardForCheck)
 
       if (
         (front && front.canConnectBack !== cardForCheck.canConnectFront) ||
@@ -85,38 +85,38 @@ export class GameBoardComponent implements OnInit {
         (right && right.canConnectLeft !== cardForCheck.canConnectRight)
       ) return
 
-      this.addCardButtons.push(new AddGameCardButton(x, y));
-    };
+      this.addCardButtons.push(new AddGameCardButton(x, y))
+    }
 
     this.cards.forEach((card) => {
       if (card.canConnectFront && !this.findFront(card)) {
-        addButton(card.x + 1, card.y);
+        addButton(card.x + 1, card.y)
       }
       if (card.canConnectBack && !this.findBack(card)) {
-        addButton(card.x - 1, card.y);
+        addButton(card.x - 1, card.y)
       }
       if (card.canConnectLeft && !this.findLeft(card)) {
-        addButton(card.x, card.y - 1);
+        addButton(card.x, card.y - 1)
       }
       if (card.canConnectRight && !this.findRight(card)) {
-        addButton(card.x, card.y + 1);
+        addButton(card.x, card.y + 1)
       }
-    });
+    })
   }
 
   findLeft(card: GameCard) {
-    return this.cards.find((el) => el.y === card.y - 1 && el.x === card.x);
+    return this.cards.find((el) => el.y === card.y - 1 && el.x === card.x)
   }
 
   findRight(card: GameCard) {
-    return this.cards.find((el) => el.y === card.y + 1 && el.x === card.x);
+    return this.cards.find((el) => el.y === card.y + 1 && el.x === card.x)
   }
 
   findFront(card: GameCard) {
-    return this.cards.find((el) => el.x === card.x + 1 && el.y === card.y);
+    return this.cards.find((el) => el.x === card.x + 1 && el.y === card.y)
   }
 
   findBack(card: GameCard) {
-    return this.cards.find((el) => el.x === card.x - 1 && el.y === card.y);
+    return this.cards.find((el) => el.x === card.x - 1 && el.y === card.y)
   }
 }

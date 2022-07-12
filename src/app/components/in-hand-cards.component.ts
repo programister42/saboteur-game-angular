@@ -1,13 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
-import { Observable } from 'rxjs';
-import { CardType, GameCard, InHandGameCard } from '../models/game-card';
-import { GameEngineService } from '../services/game-engine.service';
+import { Component, OnInit } from '@angular/core'
+import { Observable } from 'rxjs'
+import { InHandGameCard } from '../models/game-card'
+import { GameEngineService } from '../services/game-engine.service'
 
 @Component({
   selector: 'app-in-hand-cards',
@@ -24,11 +18,11 @@ import { GameEngineService } from '../services/game-engine.service';
         'gap-2'
       ]"
     >
-    <div [ngClass]="['flex', 'p-4', 'justify-center', 'items-center', 'sticky', 'left-0', 'z-50']">
-      <button mat-fab (click)="rotateHand()">
-        <mat-icon>rotate_left</mat-icon>
-      </button>
-    </div>
+      <div [ngClass]="['flex', 'p-4', 'justify-center', 'items-center', 'sticky', 'left-0', 'z-50']">
+        <button mat-fab (click)="rotateHand()">
+          <mat-icon>rotate_left</mat-icon>
+        </button>
+      </div>
       <app-tunnel-card
         *ngFor="let card of cards | async"
         [card]="card"
@@ -50,21 +44,21 @@ import { GameEngineService } from '../services/game-engine.service';
   ],
 })
 export class InHandCardsComponent implements OnInit {
-  cards!: Observable<InHandGameCard[]>;
+  cards!: Observable<InHandGameCard[]>
 
-  activeCard!: InHandGameCard;
+  activeCard!: InHandGameCard
 
   constructor(private gameEngine: GameEngineService) {}
 
   ngOnInit(): void {
-    this.cards = this.gameEngine.inHandCards.pipe();
+    this.cards = this.gameEngine.inHandCards.pipe()
   }
 
   playCard(card: InHandGameCard): void {
-    this.gameEngine.playCard(card);
+    this.gameEngine.playCard(card)
   }
 
   rotateHand(): void {
-    this.gameEngine.rotateHand();
+    this.gameEngine.rotateHand()
   }
 }
