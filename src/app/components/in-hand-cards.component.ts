@@ -24,7 +24,7 @@ import { GameEngineService } from '../services/game-engine.service';
         'gap-2'
       ]"
     >
-    <div [ngClass]="['flex', 'mx-6', 'justify-center', 'items-center', 'sticky', 'left-0', 'z-50']">
+    <div [ngClass]="['flex', 'p-4', 'justify-center', 'items-center', 'sticky', 'left-0', 'z-50']">
       <button mat-fab (click)="rotateHand()">
         <mat-icon>rotate_left</mat-icon>
       </button>
