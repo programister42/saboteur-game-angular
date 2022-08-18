@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { combineLatest, Observable, zip } from 'rxjs';
 import { AddGameCardButton, CardType, GameCard } from '../models/game-card';
 import { GameEngineService } from '../services/game-engine.service';
@@ -10,19 +10,16 @@ import { GameEngineService } from '../services/game-engine.service';
       [ngClass]="[
         'w-max',
         'h-max',
+        'min-h-full',
         'p-4',
         'grid',
         'gap-2',
         'justify-start',
+        'content-center',
         'auto-rows-max',
         'auto-cols-max'
       ]"
       #gameBoard
-      [style.marginTop]="
-        gameBoard.offsetHeight < hostElement.offsetHeight
-          ? (hostElement.offsetHeight - gameBoard.offsetHeight) / 2 + 'px'
-          : '0px'
-      "
     >
       <app-tunnel-card
         *ngFor="let card of cards"
@@ -45,13 +42,13 @@ import { GameEngineService } from '../services/game-engine.service';
   `,
 })
 export class GameBoardComponent implements OnInit {
+  @ViewChild('gameBoard') gameBoard!: ElementRef
+
   cards: GameCard[] = [new GameCard(0, 0, CardType.INTERSECTION)];
   addCardButtons: AddGameCardButton[] = [];
-  hostElement: HTMLElement;
   activeCard!: GameCard;
 
-  constructor(element: ElementRef, private gameEngine: GameEngineService) {
-    this.hostElement = element.nativeElement;
+  constructor(private gameEngine: GameEngineService,private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
