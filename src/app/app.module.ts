@@ -23,7 +23,9 @@ import { PlayersListComponent } from './components/players-list.component'
 import { TablesComponent } from './components/tables.component'
 import { TunnelCardComponent } from './components/tunnel-card.component'
 import { GameTableComponent } from './pages/game-table.component'
-import { MainComponent } from './pages/main.component'
+import { MainComponent } from './pages/main.component';
+import { InHandCardsComponent } from './components/in-hand-cards.component';
+import { DragToScrollDirective } from './directives/drag-to-scroll.directive'
 
 const materialModules = [
   MatToolbarModule,
@@ -48,6 +50,8 @@ const materialModules = [
     PlayersListComponent,
     GameBoardComponent,
     TunnelCardComponent,
+    InHandCardsComponent,
+    DragToScrollDirective,
   ],
   imports: [
     BrowserModule,

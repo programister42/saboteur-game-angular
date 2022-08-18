@@ -11,16 +11,16 @@ export enum CardType {
 export class GameCard {
   x: number
   y: number
-  cardType: CardType
+  type: CardType
   canConnectBack: boolean = false
   canConnectFront: boolean = false
   canConnectLeft: boolean = false
   canConnectRight: boolean = false
 
-  constructor(x: number, y: number, cardType: CardType = CardType.INTERSECTION) {
+  constructor(x: number, y: number, cardType: CardType, card?: GameCard) {
     this.x = x
     this.y = y
-    this.cardType = cardType
+    this.type = cardType
     switch (cardType) {
       case CardType.HORIZONTAL:
         this.canConnectBack = true
@@ -50,6 +50,13 @@ export class GameCard {
         this.canConnectRight = true
         break
     }
+
+    if (card) {
+      this.canConnectBack = card.canConnectBack
+      this.canConnectFront = card.canConnectFront
+      this.canConnectLeft = card.canConnectLeft
+      this.canConnectRight = card.canConnectRight
+    }
   }
 
   get column() {
@@ -76,11 +83,12 @@ export class GameCard {
   }
 }
 
-export class AddGameCardButton extends GameCard {
-  possibleGameCards: GameCard[]
+export class InHandGameCard extends GameCard {
+  isActive: boolean = false
+}
 
-  constructor(x: number, y: number, possibleGameCards: GameCard[]) {
+export class AddGameCardButton extends GameCard {
+  constructor(x: number, y: number) {
     super(x, y, CardType.ADD_CARD_BUTTON)
-    this.possibleGameCards = possibleGameCards
   }
 }
